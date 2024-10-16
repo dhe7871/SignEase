@@ -40,7 +40,7 @@
             statusMessage.innerHTML = "Processing request...";
 
             // Call API to get the video stream
-            const apiUrl = `http://127.0.0.1:5000/text/${encodeURIComponent(tbox.value)}`;
+            const apiUrl = `signeaseapiagain-gudcfqe3cbbnhkea.canadacentral-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
             
             fetch(apiUrl)
                 .then(response => {
@@ -48,6 +48,7 @@
                         // If response is OK, set video source and load the video
                         videoSource.src = apiUrl;
                         videoPlayer.load();
+                        console.log(response.headers.get('Content-Range'))
                         statusMessage.innerHTML = "Video is loading...";
                     } else {
                         statusMessage.innerHTML = "No video found for the input.";
