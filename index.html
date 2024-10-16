@@ -10,9 +10,9 @@
     <input type="text" name="text" id="text" placeholder="Enter text to convert">
     <button onclick="APImagic()">Send</button>
     <div id="statusMessage"></div>
-
+    <div id="wordnotfound"></div>
     <!-- Video player for streaming the output video -->
-    <video id="videoPlayer" width="640" height="360" controls autoplay>
+    <video id="videoPlayer" width="640" height="360" controls autoplay preload="auto">
         <source id="videoSource" src="" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -28,6 +28,7 @@
         function APImagic() {
             console.log("API call initiated...");
             const statusMessage = document.getElementById('statusMessage');
+            const wordnotfoundElement = document.getElementById('wordnotfound');
             const tbox = document.getElementById('text');
             const videoPlayer = document.getElementById('videoPlayer');
             const videoSource = document.getElementById('videoSource');
@@ -39,7 +40,7 @@
             statusMessage.innerHTML = "Processing request...";
 
             // Call API to get the video stream
-            const apiUrl = `https://signeaseapiagain-gudcfqe3cbbnhkea.canadacentral-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
+            const apiUrl = `http://127.0.0.1:5000/text/${encodeURIComponent(tbox.value)}`;
             
             fetch(apiUrl)
                 .then(response => {
