@@ -18,12 +18,20 @@
     </video>
 
     <script>
+        document.getElementById('text').addEventListener("keydown", function(event){
+            if(event.key ==="Enter"){
+                event.preventDefault()
+                APImagic()
+            }
+        })
+
         function APImagic() {
             console.log("API call initiated...");
             const statusMessage = document.getElementById('statusMessage');
             const tbox = document.getElementById('text');
             const videoPlayer = document.getElementById('videoPlayer');
             const videoSource = document.getElementById('videoSource');
+
 
             // Clear previous video source
             videoSource.src = '';
