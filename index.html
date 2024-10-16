@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Streaming API</title>
+</head>
+<body>
+    <h1>Sign Language Video Stream</h1>
+    <input type="text" name="text" id="text" placeholder="Enter text to convert">
+    <button onclick="APImagic()">Send</button>
+    <div id="statusMessage"></div>
+
+    <!-- Video player for streaming the output video -->
+    <video id="videoPlayer" width="640" height="360" controls autoplay>
+        <source id="videoSource" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        function APImagic() {
+            console.log("API call initiated...");
+            const statusMessage = document.getElementById('statusMessage');
+            const tbox = document.getElementById('text');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+
+            // Clear previous video source
+            videoSource.src = '';
+            videoPlayer.load();
+            statusMessage.innerHTML = "Processing request...";
+
+            // Call API to get the video stream
+            const apiUrl = `https://signeaseapiagain-gudcfqe3cbbnhkea.canadacentral-01.azurewebsites.netKf/text/${encodeURIComponent(tbox.value)}`;
+            
+            fetch(apiUrl)
+                .then(response => {
+                    if (response.ok) {
+                        // If response is OK, set video source and load the video
+                        videoSource.src = apiUrl;
+                        videoPlayer.load();
+                        statusMessage.innerHTML = "Video is loading...";
+                    } else {
+                        statusMessage.innerHTML = "No video found for the input.";
+                    }
+                })
+                .catch(error => {
+                    statusMessage.innerHTML = `Error: ${error.message}`;
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
