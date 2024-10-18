@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Streaming API</title>
+    <title>Video Stream Demo</title>
 </head>
 <body>
-    <h1>Sign Language Video Stream</h1>
+    <h1>SignEase Sign Language Demo Stream</h1>
     <input type="text" name="text" id="text" placeholder="Enter text to convert">
     <button onclick="APImagic()">Send</button>
     <div id="statusMessage"></div>
@@ -27,7 +27,6 @@
         function APImagic() {
             console.log("API call initiated...");
             const statusMessage = document.getElementById('statusMessage');
-            const wordnotfoundElement = document.getElementById('wordnotfound');
             const tbox = document.getElementById('text');
             const videoPlayer = document.getElementById('videoPlayer');
             const videoSource = document.getElementById('videoSource');
@@ -47,7 +46,6 @@
                         // If response is OK, set video source and load the video
                         videoSource.src = apiUrl;
                         videoPlayer.load();
-                        console.log(response.headers.get('Content-Range'))
                         statusMessage.innerHTML = "Video is loading...";
                     } else {
                         statusMessage.innerHTML = "No video found for the input.";
