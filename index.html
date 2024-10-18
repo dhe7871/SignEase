@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Video Stream Demo</title>
 </head>
 <body>
-    <h1>SignEase Sign Language Demo Stream</h1>
-    <input type="text" name="text" id="text" placeholder="Enter text to convert">
-    <button onclick="APImagic()">Send</button>
+    <nav class="navbar">SignEase Sign Language Demo Stream</nav>
+    <div class="form">
+        <input type="text" name="text" id="text" placeholder="Enter text to convert">
+        <button onclick="APImagic()">Send</button>
+    </div>
     <div id="statusMessage"></div>
-    <div id="wordnotfound"></div>
+
+
     <!-- Video player for streaming the output video -->
-    <video id="videoPlayer" width="640" height="360" controls autoplay preload="auto">
-        <source id="videoSource" src="" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+     <div class="video" id="video">
+        <video id="videoPlayer" width="50%" height="auto" controls autoplay preload="auto">
+            <source id="videoSource" src="" type="video/mp4">
+        </video>
+     </div>
+   
 
     <script>
         document.getElementById('text').addEventListener("keydown", function(event){
@@ -30,12 +36,16 @@
             const tbox = document.getElementById('text');
             const videoPlayer = document.getElementById('videoPlayer');
             const videoSource = document.getElementById('videoSource');
+            const video = document.getElementById('video')
 
 
             // Clear previous video source
             videoSource.src = '';
             videoPlayer.load();
-            statusMessage.innerHTML = "Processing request...";
+            statusMessage.innerHTML = "Status Message: Processing request...";
+            statusMessage.style.color = "rgb(23, 158, 237)";
+            statusMessage.style.visibility = 'visible';
+            video.style.visibility = 'hidden';
 
             // Call API to get the video stream
             const apiUrl = `https://signease-hpd3hee5gwdsd5bw.centralindia-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
@@ -46,13 +56,17 @@
                         // If response is OK, set video source and load the video
                         videoSource.src = apiUrl;
                         videoPlayer.load();
-                        statusMessage.innerHTML = "Video is loading...";
+                        video.style.visibility = 'visible';
+                        statusMessage.innerHTML = 'Status Message: Video is loading....'
+                        statusMessage.style.color = "rgb(70, 207, 70)";
                     } else {
-                        statusMessage.innerHTML = "No video found for the input.";
+                        statusMessage.innerHTML = "Status Message: No video found for the input.";
+                        statusMessage.style.color = "rgb(255, 0, 0)";
                     }
                 })
                 .catch(error => {
                     statusMessage.innerHTML = `Error: ${error.message}`;
+                    statusMessage.style.color = "rgb(255, 0, 0)";
                     console.error('Error:', error);
                 });
         }
