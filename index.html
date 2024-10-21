@@ -48,8 +48,8 @@
             video.style.visibility = 'hidden';
 
             // Call API to get the video stream
-            const apiUrl = `https://34.122.209.207/text/${encodeURIComponent(tbox.value)}`;
-            //const apiUrl = `https://signeaseapiagain-gudcfqe3cbbnhkea.centralindia-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
+            //const apiUrl = `https://34.122.209.207/text/${encodeURIComponent(tbox.value)}`;
+            const apiUrl = `https://signeaseapiagain-gudcfqe3cbbnhkea.centralindia-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
 
             fetch(apiUrl)
                 .then(response => {
