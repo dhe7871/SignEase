@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="loginbody">
+    <section id="login1">
+        <div id="login1div1">
+            <a href="login.html">
+                <h1>SignEase</h1>
+            </a>
+        </div>
+
+        <div class="login1div2">
+            <form id="signupform" style="display:none">
+                <h1>Welcome</h1>
+                <p>Please enter your details</p>
+                <label for="name">Name</label><br>
+                <input type="text" id="name" name="name" required><br>
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" name="password" required><br>
+
+                <div class="divbtn" id="signupbtn">Generate OTP</div>
+            </form>
+            <br>
+            <form id="OTPform" style="display:none">
+                <label for="OTP">Enter OTP</label><br>
+                <input type="number" id="OTP" name="OTP"><br>
+                <div id="valResbtns">
+                    <div class="divbtn" id="validateOTPbtn">Validate OTP</div>
+                    <div class="divbtn" id="resendOTPbtn">Resend OTP</div>
+                </div>
+                <!-- <div class="divbtn" id="submitsignupform">Submit</div> -->
+            </form>
+        </div>
+        <div class="login1div3">
+            <form id="loginform">
+                <h1>Login</h1>
+                <br />
+                <label for="id">Username/Email</label><br>
+                <input type="text" id="id" name="id" required><br>
+                <label for="logpassword">Password</label><br>
+                <input type="password" id="logpassword" name="password" required><br>
+                <div class="divbtn" id="loginbtn">Log In</div>
+                <div class="divbtn" id="fpbtn">Forgot Password</div><br>
+                <p>Not a user?</p>
+                <div class="divbtn" id="newsignupbtn">Register</div>
+            </form>
+
+
+            <form id="forgotpasswordform" style="display:none">
+                <label for="forgotpassemail">Enter Email</label><br>
+                <input type="email" id="forgotpassemail" name="email">
+                <div class="divbtn" id="fpesbtn">Submit</div>
+            </form>
+
+            <br /> <br />
+            <form id="newpasswordform" style="display:none">
+                <label for="newpassword">Enter New Password</label><br>
+                <input type="password" id="newpassword" name="password">
+                <div class="divbtn" id="npsbtn">Submit</div>
+            </form>
+        </div>
+    </section>
+    <section id="login2">
+        <img src="image1.png" alt="image" id="login2image1" />
+    </section>
+
+    <script>
+        const signupform = document.getElementById('signupform');
+        const OTPform = document.getElementById('OTPform');
+        const loginform = document.getElementById('loginform');
+        const forgotpasswordform = document.getElementById('forgotpasswordform');
+        const newpasswordform = document.getElementById('newpasswordform');
+
+        const logoutbtn = document.getElementById('logoutbtn');
+        const signupbtn = document.getElementById('signupbtn');
+        const validateOTPbtn = document.getElementById('validateOTPbtn');
+        const resendOTPbtn = document.getElementById('resendOTPbtn');
+        const loginbtn = document.getElementById('loginbtn');
+        const fpbtn = document.getElementById('fpbtn');
+        const fpesbtn = document.getElementById('fpesbtn');
+        const npsbtn = document.getElementById('npsbtn');
+        const newsignupbtn = document.getElementById('newsignupbtn');
+
+        const baseurl = 'https://signeaseloginapi-gvhganfcfnb5aqg6.centralindia-01.azurewebsites.net'
+        // const baseurl = 'http://127.0.0.1:8000'
+
+        // logoutbtn.addEventListener('click', ()=>{
+        //     data = {
+        //         'cuid': (localStorage.getItem('cuid') == null)?'':localStorage.getItem('cuid')
+        //     }
+        //     fetch(`${baseurl}/logOut/`,{
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(data)
+        //     }).then(response =>{
+        //         if(!response.ok){
+        //             console.log('Something Fucked up!');
+        //         }
+        //         return response.json()
+        //     }).then(message=>{
+        //         localStorage.removeItem('cuid');
+        //         console.log(message);
+        //     }).catch(error=>{
+        //         console.error(error);
+        //     })
+
+        // })
+
+        newsignupbtn.onclick = function () {
+            loginform.style.display = 'none';
+            signupform.style.display = 'block';
+        }
+
+        signupbtn.onclick = function () {
+            OTPform.style.display = 'block';
+            const formdata = new FormData(signupform)
+            data = {}
+            isblank = false;
+            console.log(formdata.entries())
+            for (let [key, value] of formdata.entries()) {
+                console.log(key, value)
+                if (formdata.get(key)) {
+                    data[key] = formdata.get(key)
+                } else {
+                    console.log(`${key} field is blank!`)
+                    isblank = true;
+                }
+            }
+            if (!isblank) {
+                fetch(`${baseurl}/signUp/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log('something fucked up!')
+                    }
+                    return response.json()
+                }).then(message => {
+                    console.log(message)
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+
+
+        }
+
+
+        loginbtn.onclick = function () {
+            const formdata = new FormData(loginform);
+            isblank = false;
+            if (!formdata.get('id') || !formdata.get('password')) {
+                console.log('Fields must not be blank!');
+                isblank = true;
+            }
+            data = {
+                'id': formdata.get('id'),
+                'password': formdata.get('password'),
+                'cuid': (localStorage.getItem('cuid') == null) ? '' : localStorage.getItem('cuid')
+            }
+
+            if (!isblank) {
+                fetch(`${baseurl}/logIn/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log('something fucked up!')
+                    }
+                    return response.json()
+                }).then(message => {
+                    localStorage.setItem('username', message.name);
+                    localStorage.setItem('cuid', message.uid);
+                    if (message.detail != 'Incorrect Password!') {
+                        location.href = "/index.html";
+                    }
+                }).catch(error => {
+                    console.log(error);
+                })
+            }
+
+        }
+
+
+        validateOTPbtn.onclick = function () {
+            signupform.style.display = 'none';
+            OTPform.style.display = 'none';
+            const formdata = new FormData(OTPform);
+            if (formdata.get('OTP')) {
+                data = { 'OTP': parseInt(formdata.get('OTP')) }
+                fetch(`${baseurl}/validateOTP/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log('something fucked up!')
+                    }
+                    return response.json()
+                }).then(message => {
+                    if (message.valid && message.otpvalidationfor == 'forgotpassword') {
+                        console.log('come here')
+                        newpasswordform.style.display = 'block';
+                        loginform.style.display = 'none';
+                    }
+                    else if (message.valid && message.otpvalidationfor == 'signup') {
+                        console.log('come here')
+                        loginform.style.display = 'block';
+                    }
+                    console.log(message, message.valid, message.otpvalidationfor)
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+        }
+
+        resendOTPbtn.addEventListener('click', () => {
+            fetch(`${baseurl}/resendOTP/`
+            ).then(response => {
+                if (!response.ok) {
+                    console.log('something fucked up!')
+                }
+                return response.json()
+            }).then(message => {
+                console.log(message)
+            }).catch(error => {
+                console.log(error)
+            })
+        })
+
+        fpbtn.onclick = function () {
+            forgotpasswordform.style.display = (forgotpasswordform.style.display == 'none') ? 'block' : 'none';
+            loginform.style.display = 'none';
+            newsignupform.style.display = 'none';
+            // forgotpasswordform.style.display='block';
+        }
+
+        fpesbtn.onclick = function () {
+            forgotpasswordform.style.display = 'none';
+            OTPform.style.display = 'block';
+
+            const formdata = new FormData(forgotpasswordform);
+            if (formdata.get('email')) {
+                data = { 'email': formdata.get('email') }
+                fetch(`${baseurl}/forgotPassword/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log('something fucked up!')
+                    }
+                    return response.json()
+                }).then(message => {
+                    console.log(message)
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+        }
+
+
+        npsbtn.onclick = function () {
+            const formdata = new FormData(newpasswordform);
+            if (formdata.get('password')) {
+                data = { 'password': formdata.get('password') }
+                fetch(`${baseurl}/changePassword/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (!response.ok) {
+                        console.log('something fucked up!')
+                    }
+                    return response.json()
+                }).then(message => {
+                    loginform.style.display = 'block';
+                    newpasswordform.style.display = 'none';
+                    console.log(message)
+                }).catch(error => {
+                    console.log(error)
+                })
+            } else {
+                console.log("Password field cann't be sent empty!")
+            }
+        }
+    </script>
+    <!-- <script src="script.js"></script>     -->
+</body>
+
+</html>
