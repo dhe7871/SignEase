@@ -41,10 +41,10 @@ function btnclick() {
         statusMessage.style.color = "rgb(23, 158, 237)";
         statusMessage.style.display = "block";
 
-        // const apiUrl = `https://signeaseapiagain-gudcfqe3cbbnhkea.centralindia-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
-        const apiUrl = `http://127.0.0.1:8000/text/${encodeURIComponent(
-            tbox.value
-        )}`;
+        const apiUrl = `https://signeaseapiagain-gudcfqe3cbbnhkea.centralindia-01.azurewebsites.net/text/${encodeURIComponent(tbox.value)}`;
+        // const apiUrl = `http://127.0.0.1:8000/text/${encodeURIComponent(
+        //     tbox.value
+        // )}`;
 
         fetch(apiUrl)
             .then((response) => {
