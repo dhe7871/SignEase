@@ -11,7 +11,7 @@
 <body class="loginbody">
     <section id="login1">
         <div id="login1div1">
-            <a href="/index.html">
+            <a href="../index.html">
                 <h1>SignEase</h1>
             </a>
         </div>
@@ -191,7 +191,7 @@
                     localStorage.setItem('username', message.name);
                     localStorage.setItem('cuid', message.uid);
                     if (message.detail != 'Incorrect Password!') {
-                        location.href = "/index.html";
+                        location.href = "../index.html";
                     }
                 }).catch(error => {
                     console.log(error);
