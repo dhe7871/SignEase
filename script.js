@@ -12,7 +12,7 @@ const welcomeMsg = document.querySelector(".welcomeMsg");
 
 window.addEventListener("DOMContentLoaded", () => {
     mylogin.innerText = localStorage.cuid ? "Log out" : "Log in/Sign up";
-    if (!localStorage.cuid) location.href = "/login/login.html";
+    if (!localStorage.cuid) location.href = "login/login.html";
     welcomeMsg.innerText = `Welcome ${localStorage.username}`;
 });
 
